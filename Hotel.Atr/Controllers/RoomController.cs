@@ -10,21 +10,19 @@ namespace Hotel.Atr.Controllers
         // GET: RoomController
         public ActionResult Index()
         {
-
-           
-
             ServiceRoom serviceRooms = new ServiceRoom();
-            var rooms = serviceRooms.GetRooms();
 
-            return View(rooms);
+            return View(serviceRooms.GetRooms());
         }
 
         public ActionResult RoomList()
         {
-            return View();
+            ServiceRoom serviceRooms = new ServiceRoom();
+
+            return View(serviceRooms.GetRooms());
         }
 
-        public ActionResult RoomDetails()
+        public ActionResult RoomDetails(Guid roomId)
         {
             return View();
         }

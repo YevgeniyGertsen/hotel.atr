@@ -11,5 +11,7 @@ namespace Hotel.Atr.BLL.Model
         public int RoomPropertiesId { get; set; }
         public string NamePropery { get; set; }
         public string ValuePropery { get; set; }
+        public int RoomId { get; set; }
+        
     }
 }

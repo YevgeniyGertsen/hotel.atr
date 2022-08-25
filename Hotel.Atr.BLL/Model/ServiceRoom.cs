@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Dapper;
+using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
@@ -14,17 +15,31 @@ namespace Hotel.Atr.BLL.Model
         {
             try
             {
-                using (SqlConnection sqlConnection = new SqlConnection(connectionString))
+                using (SqlConnection db = new SqlConnection(connectionString))
                 {
-                    sqlConnection.Open();
+                    db.Open();
+
+                    List<Room> data = db.Query<Room>
+                        ("SELECT * FROM Room ")
+                        .ToList();
+
+
+                    foreach (Room room in data)
+                    {
+                        room.Pictures = db.Query<Picture>("SELECT * FROM Picture where RoomId=@RoomId", 
+                            new { RoomId  = room.RoomId}).ToList();
+
+                        room.RoomProperties = db.Query<RoomProperties>("SELECT * FROM RoomProperties where RoomId=@RoomId",
+                            new { RoomId = room.RoomId }).ToList();
+                    }
+
+                    return data;
                 }
             }
             catch (Exception ex)
             {
-                string exeption = ex.Message;
+                return null;
             }
-            
-            return new List<Room>();
         }
     }
 }
