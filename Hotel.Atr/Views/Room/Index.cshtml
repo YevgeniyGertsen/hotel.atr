@@ -1,7 +1,6 @@
 ﻿@using Hotel.Atr.BLL.Model
 @model List<Room>
 
-
 <!-- Breadcrumb Area Start-->
 <section class="breadcrumb-area overlay-dark-2 bg-3">
     <div class="container">
@@ -39,32 +38,32 @@
 
         <div class="row">
 
-            @if(Model == null)
+            @if (Model == null)
             {
                 <h2>Комнат нет.</h2>
             }
             else
             {
-                foreach(Room room in Model)
+                foreach (Room room in Model)
                 {
                     <div class="col-md-4 col-sm-6 col-xs-12">
-                <div class="single-room">
-                    <img src="@room.GetMainPicture.UrlPicture" alt="@room.GetMainPicture.Name">
-                    <div class="room-hover text-center">
-                        <div class="hover-text">
-                            <h3><a href="room-details.html">@room.Name</a></h3>
-                            <div class="p-amount">
-                                <span>@room.NoDiscount()</span>
-                                <span class="count">Per Night</span>
-                            </div>
-                            <p>@room.ShortDescription()</p>
-                            <div class="room-btn">
-                                <a href="@Url.Action("RoomDetails", "Room", new{roomId = room.RoomGuid})" class="default-btn">DETAILS</a>
+                        <div class="single-room">
+                            <img src="@room.GetMainPicture.UrlPicture" alt="@room.GetMainPicture.Name">
+                            <div class="room-hover text-center">
+                                <div class="hover-text">
+                                    <h3><a href="room-details.html">@room.Name</a></h3>
+                                    <div class="p-amount">
+                                        <span>@room.NoDiscount()</span>
+                                        <span class="count">Per Night</span>
+                                    </div>
+                                    <p>@room.ShortDescription()</p>
+                                    <div class="room-btn">
+                                        <a href="@Url.Action("RoomDetails", "Room", new{roomId = room.RoomGuid})" class="default-btn">DETAILS</a>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
                 }
             }
         </div>
