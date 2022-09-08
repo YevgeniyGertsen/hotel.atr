@@ -1,5 +1,9 @@
 ﻿@using Hotel.Atr.BLL.Model
 @model Room
+@{
+    bool checkAvailabilityResult = Convert.ToBoolean(TempData["CheckAvailabilityResult"]);
+    var availabilityRoom = TempData["AvailabilityRoom"];
+}
 
 <!-- Breadcrumb Area Start-->
 <section class="breadcrumb-area overlay-dark-2 bg-3">
@@ -103,6 +107,7 @@
                 <div class="sidebar-widget">
                     <h3 class="room-details-title">your reservation</h3>
                     <form action="/Room/CheckAvailability" method="post" class="search-form">
+                        <input type="hidden" name="roomId" value="@Model.RoomGuid" />
                         <div class="form-container fix">
                             <div class="box-select">
 
@@ -127,7 +132,9 @@
                                         DateTime.Now.AddMonths(1).CompareTo(date) > 0;
                                         date = date.AddDays(1.0))
                                         {
-                                            <option>@string.Format("{0:dd MMM}", date)</option>
+                                            <option value="@string.Format("{0:dd.MM.yyyy}", date)">
+                                                @string.Format("{0:dd MMM}", date)
+                                            </option>
                                         }
                                     </select>
                                 </div>
@@ -156,7 +163,22 @@
                                     </select>
                                 </div>
                             </div>
+
+                            @if (checkAvailabilityResult)
+                            {
+                                <p>Номер на выбранный период доступен. 
+                                    <a href="#" data-toggle="modal" data-target="#bookingRoomModal">Желаете забронировать?</a>
+                                </p>
+                            }
+                            else
+                            {
+                                <p style = "color:red">@availabilityRoom</p>
+                            }
+
+                            
                             <button type="submit" class="search default-btn">Check Availability</button>
+
+                            
                         </div>
                     </form>
                 </div>
@@ -287,6 +309,12 @@
     </div>
 </section>
 <!-- Room Details Area End -->
+ @if (checkAvailabilityResult)
+{
+    Html.RenderPartial("_bookingRoomModal");
+}
+
+
 @section Scripts
 {
 <script>

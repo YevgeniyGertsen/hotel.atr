@@ -1,4 +1,5 @@
 ﻿using Hotel.Atr.BLL.Model;
+using Microsoft.AspNetCore.Hosting.Server;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Data.SqlClient;
@@ -22,17 +23,34 @@ namespace Hotel.Atr.Controllers
 
         public ActionResult RoomDetails(Guid roomId, string availabilityRoom="")
         {
+            var data = Response;
+            var data2 = RouteData;
+            var data3 = HttpContext;
+          
+
             return View(serviceRooms.GetRoom(roomId));
         }   
         
         [HttpPost]
-        public ActionResult CheckAvailability(string arrive)
+        public ActionResult CheckAvailability(Guid roomId, DateTime arrive, DateTime departure)
         {
-            Guid roomId = Guid.Empty;
             string availabilityRoom = "";
-
+           
+            TempData["CheckAvailabilityResult"] = serviceRooms.CheckAvailability(roomId, arrive, departure, out availabilityRoom);
+            TempData["AvailabilityRoom"] = availabilityRoom;
 
             return RedirectToAction("RoomDetails", new { roomId, availabilityRoom });
         }
+
+        //public string SomeMethod()
+        //{
+        //    return "<h1>Test</h1>";
+        //}
+
+        //[NonAction]
+        //public string SomeMethod2()
+        //{
+        //    return Content("<h1>Test</h1>").ToString();
+        //}
     }
 }
