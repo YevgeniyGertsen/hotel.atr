@@ -8,10 +8,13 @@ namespace Hotel.Atr.BLL.Model
 {
     public class Availabilty
     {
-        public Availabilty(DateTime start,DateTime end)
+        public Availabilty(DateTime start,DateTime end, Guid roomId)
         {
             ReservationStart = start;
             ReservationEnd = end;
+            ServiceRoom serviceRoom = new ServiceRoom();
+
+            RoomId = serviceRoom.GetRoom(roomId).RoomId;
         }
         public Availabilty()
         {
@@ -21,6 +24,7 @@ namespace Hotel.Atr.BLL.Model
         public DateTime ReservationEnd { get; set; }
 
         public Room Room { get; set; }
+        public int RoomId { get; set; }
 
         public double ReservationTotalDays { get { return (ReservationEnd - ReservationStart).TotalDays; } }
     }

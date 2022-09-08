@@ -1,82 +1,83 @@
-﻿
+﻿<!-- Modal -->
+<div class="modal fade" id="bookingRoomModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            @using (Html.BeginForm("BookingRoom", "Room", FormMethod.Post))
+            {
+                
+            
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
 
-<!-- Modal --> 
-<div class="modal fade" id="bookingRoomModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"> 
-  <div class="modal-dialog" role="document"> 
-    <div class="modal-content"> 
-      <div class="modal-header"> 
-        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5> 
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"> 
-          <span aria-hidden="true">&times;</span> 
-        </button> 
-      </div> 
-      <div class="modal-body"> 
-        <form action="/Room/CheckAvailability" method="post" class="search-form">
-                        <input type="hidden" name="roomId" value="@Model.RoomGuid" />
-                        <div class="form-container fix">
-                            <div class="box-select">
+                    <input type="hidden" name="roomId" value="@Model.RoomGuid" />
+                    <div class="form-container fix">
+                        <div class="box-select">
 
-                                <div class="select date">
-                                    <select name="arrive">
-                                        <option value="0">ARRIVE DATE</option>
-                                        @for (DateTime date = DateTime.Now;
-                                        DateTime.Now.AddMonths(1).CompareTo(date) > 0;
-                                        date = date.AddDays(1.0))
-                                        {
-                                            <option value="@string.Format("{0:dd.MM.yyyy}", date)">
-                                                @string.Format("{0:dd MMM}", date)
-                                            </option>
-                                        }
-                                    </select>
-                                </div>
-
-                                <div class="select date">
-                                    <select name="departure">
-                                        <option>DEPARTURE DATE</option>
-                                        @for (DateTime date = DateTime.Now;
-                                        DateTime.Now.AddMonths(1).CompareTo(date) > 0;
-                                        date = date.AddDays(1.0))
-                                        {
-                                            <option value="@string.Format("{0:dd.MM.yyyy}", date)">
-                                                @string.Format("{0:dd MMM}", date)
-                                            </option>
-                                        }
-                                    </select>
-                                </div>
-
-                                <div class="select arrow">
-                                    <select name="adults">
-                                        <option>ADULTS</option>
-                                        <option>1</option>
-                                        <option>2</option>
-                                        <option>3</option>
-                                        <option>4</option>
-                                        <option>5</option>
-                                        <option>6</option>
-                                    </select>
-                                </div>
-
-                                <div class="select arrow">
-                                    <select name="children">
-                                        <option>CHILDREN</option>
-                                        <option>1</option>
-                                        <option>2</option>
-                                        <option>3</option>
-                                        <option>4</option>
-                                        <option>5</option>
-                                        <option>6</option>
-                                    </select>
-                                </div>
+                            <div class="select date">
+                                <select name="arrive">
+                                    <option value="0">ARRIVE DATE</option>
+                                    @for (DateTime date = DateTime.Now;
+                                    DateTime.Now.AddMonths(1).CompareTo(date) > 0;
+                                    date = date.AddDays(1.0))
+                                    {
+                                        <option value="@string.Format("{0:dd.MM.yyyy}", date)">
+                                            @string.Format("{0:dd MMM}", date)
+                                        </option>
+                                    }
+                                </select>
                             </div>
 
-                            
+                            <div class="select date">
+                                <select name="departure">
+                                    <option>DEPARTURE DATE</option>
+                                    @for (DateTime date = DateTime.Now;
+                                    DateTime.Now.AddMonths(1).CompareTo(date) > 0;
+                                    date = date.AddDays(1.0))
+                                    {
+                                        <option value="@string.Format("{0:dd.MM.yyyy}", date)">
+                                            @string.Format("{0:dd MMM}", date)
+                                        </option>
+                                    }
+                                </select>
+                            </div>
+
+                            <div class="select arrow">
+                                <select name="adults">
+                                    <option>ADULTS</option>
+                                    <option>1</option>
+                                    <option>2</option>
+                                    <option>3</option>
+                                    <option>4</option>
+                                    <option>5</option>
+                                    <option>6</option>
+                                </select>
+                            </div>
+
+                            <div class="select arrow">
+                                <select name="children">
+                                    <option>CHILDREN</option>
+                                    <option>1</option>
+                                    <option>2</option>
+                                    <option>3</option>
+                                    <option>4</option>
+                                    <option>5</option>
+                                    <option>6</option>
+                                </select>
+                            </div>
                         </div>
-                    </form>
-      </div> 
-      <div class="modal-footer"> 
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Отмени</button> 
-        <button type="button" class="btn btn-primary">Save changes</button> 
-      </div> 
-    </div> 
-  </div> 
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Отменить</button>
+                    <button type="submit" class="btn btn-primary">Забронировать</button>
+                </div>
+            }
+        </div>
+    </div>
 </div>

@@ -46,6 +46,7 @@
   <ItemGroup>
     <Compile Include="Model\Availabilty.cs" />
     <Compile Include="Model\Picture.cs" />
+    <Compile Include="Model\ReturnResult.cs" />
     <Compile Include="Model\Room.cs" />
     <Compile Include="Model\RoomProperties.cs" />
     <Compile Include="Model\ServiceRoom.cs" />

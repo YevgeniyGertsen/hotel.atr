@@ -42,6 +42,15 @@ namespace Hotel.Atr.Controllers
             return RedirectToAction("RoomDetails", new { roomId, availabilityRoom });
         }
 
+        public ActionResult BookingRoom(Guid roomId, DateTime arrive, DateTime departure)
+        {
+            Availabilty availabilty = new Availabilty(arrive, departure, roomId);
+
+            serviceRooms.BookingRoom(availabilty);
+
+            return View();
+        }
+
         //public string SomeMethod()
         //{
         //    return "<h1>Test</h1>";

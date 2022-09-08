@@ -107,5 +107,31 @@ namespace Hotel.Atr.BLL.Model
 
             return result;
         }
+
+        public ReturnResult BookingRoom(Availabilty availabilty)
+        {
+            ReturnResult result = new ReturnResult();
+
+            try
+            {
+                using (SqlConnection db = new SqlConnection(connectionString))
+                {
+                    db.Open();
+
+                    db.Query("INSERT INTO [dbo].[Availabilty]" +
+                        " ([ReservationStart],[ReservationEnd],[RoomId])" +
+                        "VALUES (@ReservationStart,@ReservationEnd,@RoomId)", availabilty);                    
+                }
+                result.Result = true;
+                result.Message = "OK";
+            }
+            catch (Exception ex)
+            {
+                result.Result = false;
+                result.Message = ex.Message;
+                
+            }
+            return result;
+        }
     }
 }
