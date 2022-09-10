@@ -1,8 +1,15 @@
 ﻿@using Hotel.Atr.BLL.Model
 @model Room
 @{
+   
+
+
     bool checkAvailabilityResult = Convert.ToBoolean(TempData["CheckAvailabilityResult"]);
+
+    TempData.Keep("AvailabilityRoom");
     var availabilityRoom = TempData["AvailabilityRoom"];
+
+    var availabilityRoom2 = TempData["AvailabilityRoom"];
 }
 
 <!-- Breadcrumb Area Start-->

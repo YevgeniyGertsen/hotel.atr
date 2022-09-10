@@ -37,7 +37,7 @@
     <div class="container">
 
         <div class="row">
-
+            
             @if (Model == null)
             {
                 <h2>Комнат нет.</h2>
@@ -46,6 +46,7 @@
             {
                 foreach (Room room in Model)
                 {
+                    
                     <div class="col-md-4 col-sm-6 col-xs-12">
                         <div class="single-room">
                             <img src="@room.GetMainPicture.UrlPicture" alt="@room.GetMainPicture.Name">

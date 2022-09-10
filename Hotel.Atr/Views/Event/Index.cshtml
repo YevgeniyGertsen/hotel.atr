@@ -1,0 +1,68 @@
+﻿@using Hotel.Atr.BLL.Model
+@model List<Event>
+@{
+    Dictionary<string, string> categories = ViewBag.Categories;
+}
+<!-- Breadcrumb Area Start-->
+<section class="breadcrumb-area overlay-dark-2 bg-3">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="breadcrumb-text text-center">
+                    <h2>Events</h2>
+                    <p>A quality room of hotel ATR with sea or mountain view</p>
+                    <div class="breadcrumb-bar">
+                        <ul class="breadcrumb">
+                            <li>@Html.ActionLink("Home","Home","Index")</li>
+                            <li>Events</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Breadcrumb Area End -->
+<!-- Event Area Start -->
+<section class="event-area pt-90">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+                <div class="section-title text-center">
+                    <h3>upcoming events</h3>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellente sque vel volutpat felis, eu condimentum massa. Pellentesque mollis eros vel mattis tempor. Aliquam </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="event-menu">
+                    <button data-filter="*" class="active"> All</button>
+                    @foreach (var item in categories)
+                    {
+                        <button data-filter=".@item.Key">@item.Value</button>
+                    }
+                </div>
+            </div>
+        </div>
+
+        <div class="row event-items">
+            @foreach (Event item in Model)
+            {
+                <div class="single-event @item.EventStyle col-xs-12 @item.EventCategory.Code">
+                    <div class="single-event-item">
+                        <img src="@item.ImagePath" alt="">
+                        <div class="event-text">
+                            <h3 class="event-title">@item.Name</h3>
+                            <h3 class="author-name">By : @item.Author</h3>
+                            <p>@item.ShortDescription</p>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</section>
+<!-- Event Area End -->

@@ -16,4 +16,8 @@
     <ProjectReference Include="..\Hotel.Atr.BLL\Hotel.Atr.BLL.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Templates\" />
+  </ItemGroup>
+
 </Project>

@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Hosting.Server;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Data.SqlClient;
+using System.Text;
 
 namespace Hotel.Atr.Controllers
 {
@@ -13,12 +14,36 @@ namespace Hotel.Atr.Controllers
         // GET: RoomController
         public ActionResult Index()
         {
+            ViewBag.Description = "List Room";
+            ViewBag.Title = "Room";
+
             return View(serviceRooms.GetRooms());
         }
+        
+
 
         public ActionResult RoomList()
         {
             return View(serviceRooms.GetRooms());
+        }
+
+        public JsonResult RoomListjSON()
+        {
+            var data = serviceRooms.GetRooms();
+            return Json(data);
+        }
+
+        public ContentResult DataForRoom()
+        {
+            return Content("test", "text/plain", Encoding.Default);
+        }
+
+        public FileResult GetRoomReport()
+        {
+            string filename = @"C:\Users\ГерценЕ\source\repos\WebApplication1\Hotel.Atr\Templates\cover.JPG";
+            string contentType = "application/JPG";
+            string newFileName = "cover_.JPG";
+            return File(filename, contentType, newFileName);
         }
 
         public ActionResult RoomDetails(Guid roomId, string availabilityRoom="")
