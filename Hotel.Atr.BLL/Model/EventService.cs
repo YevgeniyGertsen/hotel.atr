@@ -66,8 +66,15 @@ namespace Hotel.Atr.BLL.Model
         /// <returns></returns>
         public Dictionary<string, string> UniqumCategories()
         {
-            Dictionary<string,string> eventCategories = 
-                GetEvents().ToDictionary(k => k.EventCategory.Code, v => v.EventCategory.Name);
+            Dictionary<string, string> eventCategories =
+                GetEvents()
+                .Select(x => new
+                {
+                    Code = x.EventCategory.Code,
+                    Name = x.EventCategory.Name
+                })
+                .Distinct()
+                .ToDictionary(k => k.Code, v => v.Name);
             return eventCategories;
         }
     }

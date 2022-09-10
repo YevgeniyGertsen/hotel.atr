@@ -46,13 +46,13 @@ namespace Hotel.Atr.Controllers
             return File(filename, contentType, newFileName);
         }
 
-        public ActionResult RoomDetails(Guid roomId, string availabilityRoom="")
+        public ActionResult RoomDetails( string availabilityRoom="")
         {
             var data = Response;
             var data2 = RouteData;
             var data3 = HttpContext;
-          
 
+            Guid roomId = Guid.Parse(RouteData.Values["id"].ToString());
             return View(serviceRooms.GetRoom(roomId));
         }   
         

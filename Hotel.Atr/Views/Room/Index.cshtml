@@ -59,7 +59,7 @@
                                     </div>
                                     <p>@room.ShortDescription()</p>
                                     <div class="room-btn">
-                                        <a href="@Url.Action("RoomDetails", "Room", new{roomId = room.RoomGuid})" class="default-btn">DETAILS</a>
+                                        <a href="/WorkController/Room/RoomDetails/@room.RoomGuid" class="default-btn">DETAILS</a>
                                     </div>
                                 </div>
                             </div>

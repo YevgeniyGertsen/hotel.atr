@@ -10,6 +10,8 @@ namespace Hotel.Atr.Controllers
             EventService eventService = new EventService();
             List<Event> data = eventService.GetEvents();
             ViewBag.Categories = eventService.UniqumCategories();
+
+            var data_id = RouteData.Values["id"];
             return View(data);
             
         }
