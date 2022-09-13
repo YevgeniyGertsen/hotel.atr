@@ -48,6 +48,8 @@
     <Compile Include="Model\Event.cs" />
     <Compile Include="Model\EventCategory.cs" />
     <Compile Include="Model\EventService.cs" />
+    <Compile Include="Model\Location.cs" />
+    <Compile Include="Model\LocationService.cs" />
     <Compile Include="Model\Picture.cs" />
     <Compile Include="Model\ReturnResult.cs" />
     <Compile Include="Model\Room.cs" />

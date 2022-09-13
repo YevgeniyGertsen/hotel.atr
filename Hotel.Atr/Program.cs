@@ -24,37 +24,50 @@ app.UseAuthorization();
 //    new { action = "^E.*" },
 //    new { controller = "Index" });
 
+//app.UseEndpoints(endpoints =>
+//{
+
+//});
+
+//app.MapGet("/alias", async context =>
+//{
+//    await context.Response.WriteAsJsonAsync("<p>Hello Yevgeniy</p>");
+//});
+
+//app.MapControllerRoute(
+//    name: "default",
+//    pattern: "WorkController/{controller=Home}/{action=Index}/{id?}");
+
+//app.MapControllerRoute(
+//    name: "",
+//    pattern: "news2/{controller=Event}/{action=Index}/{id?}/{*cathall}");
+
+//app.MapControllerRoute(
+//    name: "MyRote",
+//    pattern: "{phpMyAdmin}/{action}",
+//    new { action = "Index", controller = "Event" });
+
+//app.MapControllerRoute(
+//    name: "MyRote",
+//    pattern: "php/MyAdmin/{action}",
+//    new { action = "Index", controller = "Event" });
+
+
+//app.MapControllerRoute(
+//    name: "",
+//    pattern: "{controller}/{action}/{id}",
+//    new { action = "Index", controller = "Event", id="Default" });
 
 app.MapControllerRoute(
-    name: "default",
+    name: "music",
     pattern: "WorkController/{controller=Home}/{action=Index}/{id?}");
-
-app.MapControllerRoute(
-    name: "",
-    pattern: "news/{controller=Event}/{action=Index}/{id?}/{*cathall}");
-
-app.MapControllerRoute(
-    name: "MyRote",
-    pattern: "{phpMyAdmin}/{action}",
-    new { action = "Index", controller = "Event" });
-
-app.MapControllerRoute(
-    name: "MyRote",
-    pattern: "php/MyAdmin/{action}",
-    new { action = "Index", controller = "Event" });
-
-
-app.MapControllerRoute(
-    name: "",
-    pattern: "{controller}/{action}/{id}",
-    new { action = "Index", controller = "Event", id="Default" });
-
 
 
 //else
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+
 
 
 app.UseRouting();

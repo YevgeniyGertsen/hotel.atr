@@ -1,0 +1,58 @@
+﻿@using Hotel.Atr.BLL.Model
+@model Location
+
+<!-- Breadcrumb Area Start-->
+<section class="breadcrumb-area overlay-dark-2 bg-3">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="breadcrumb-text text-center">
+                    <h2>near places</h2>
+                    <p>A quality room of hotel ATR with sea or mountain view</p>
+                    <div class="breadcrumb-bar">
+                        <ul class="breadcrumb">
+                            <li><a href="index.html">Home</a></li>
+                            <li>near places</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Breadcrumb Area End -->
+<!-- Team Area Start -->
+<section class="team-area pt-90 team-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+                <div class="section-title text-center">
+                    <h3>@Model.Name</h3>
+                    <p class="pb-10">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellente sque vel volutpat felis, eu condimentum massa. Pellentesque mollis eros vel mattis tempor. Aliquam </p>
+                </div>
+            </div>
+        </div>
+        <form action ="@Url.Action("SaveUserRequest", "Location")" method = "post">
+            <div class="row">
+                <div class="col-md-6">
+                    <h3>ФИО</h3>
+                </div>
+                <div class="col-md-6">
+                    <input type="text" name="fullName" class="form-control" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <h3>Телефон</h3>
+                </div>
+                <div class="col-md-6">
+                    <input type="text" name="fonName" class="form-control" />
+                </div>
+            </div>
+            <input type="submit" value="Отправить" class="default-btn" />
+        </form>
+        <br style="clear: both;" />
+        <hr />
+    </div>
+</section>
+<!-- Team Area End -->
