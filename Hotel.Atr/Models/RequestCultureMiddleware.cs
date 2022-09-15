@@ -13,17 +13,17 @@ namespace Hotel.Atr.Models
 
         public async Task InvokeAsync(HttpContext context)
         {
-            var cultureQuery = context.Request.Query["culture"];
+            //var cultureQuery = context.Request.Query["culture"];
 
-            if(!string.IsNullOrWhiteSpace(cultureQuery))
-            {
-                var culture = new CultureInfo(cultureQuery);
+            //if(!string.IsNullOrWhiteSpace(cultureQuery))
+            //{
+            //    var culture = new CultureInfo(cultureQuery);
 
-                CultureInfo.CurrentCulture = culture;
-                CultureInfo.CurrentUICulture = culture;
+            //    CultureInfo.CurrentCulture = culture;
+            //    CultureInfo.CurrentUICulture = culture;
 
-               // await _next(context);
-            }
+            //   // await _next(context);
+            //}
             //else
             //{
             //    context.Response.WriteAsJsonAsync("Some Message");

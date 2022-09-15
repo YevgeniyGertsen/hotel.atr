@@ -1,9 +1,35 @@
 using Hotel.Atr.Models;
+using Microsoft.AspNetCore.Localization;
+using Microsoft.Extensions.Options;
+using System.Globalization;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+builder.Services.Configure<RequestLocalizationOptions>(options =>
+{
+    var cultureList = new[]
+    {
+        new CultureInfo("ru"),
+        new CultureInfo("kk"),
+        new CultureInfo("en")
+    };
+
+    options.DefaultRequestCulture = new RequestCulture("ru-RU");
+    options.SupportedCultures = cultureList;
+    options.SupportedUICultures = cultureList;
+});
+
+builder.Services
+    .AddLocalization(options => options.ResourcesPath = "Resources");
+
+builder.Services
+    .AddControllersWithViews()
+    .AddViewLocalization();
+
+
 
 var app = builder.Build();
 
@@ -73,8 +99,11 @@ app.MapControllerRoute(
 app.UseRouting();
 
 
+var localizationOptions = app.Services
+    .GetService<IOptions<RequestLocalizationOptions>>().Value;
 
-app.UserReqestCulture();
+app.UseRequestLocalization(localizationOptions);
+     
 
 //app.Use(async (context, next) =>
 //{

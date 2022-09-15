@@ -1,4 +1,7 @@
-﻿@using Hotel.Atr.BLL.Model
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer localizer
+
+@using Hotel.Atr.BLL.Model
 @model List<Event>
 @{
     Dictionary<string, string> categories = ViewBag.Categories;
@@ -29,7 +32,7 @@
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
                 <div class="section-title text-center">
-                    <h3>upcoming events</h3>
+                    <h3>@localizer["text_1"].Value</h3>
                     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellente sque vel volutpat felis, eu condimentum massa. Pellentesque mollis eros vel mattis tempor. Aliquam </p>
                 </div>
             </div>
