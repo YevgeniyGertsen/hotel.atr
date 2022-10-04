@@ -11,6 +11,7 @@ namespace Hotel.Atr.BLL.Model
     public class LocationService
     {
         string connectionString = @"Server=223-17\MSSQLSERVER99;Database=ATR;Trusted_Connection=True;";
+
         public List<Location> GetLocations()
         {
             try

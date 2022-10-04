@@ -6,6 +6,7 @@ using System.Globalization;
 
 namespace Hotel.Atr.Controllers
 {
+    [TypeFilter(typeof(TimeElapsed), Order = 2)]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
@@ -18,8 +19,13 @@ namespace Hotel.Atr.Controllers
             _localizer = localizer;
         }
 
+        // [IEFilter]
+        [TypeFilter(typeof(CatchError), Order = 1)]
         public IActionResult Index()
         {
+            //throw new Exception("Error test exception");
+
+
             ViewBag.Title = _localizer["Title"];
 
             var cultureName = CultureInfo.CurrentCulture.Name;

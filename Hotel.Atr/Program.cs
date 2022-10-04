@@ -1,3 +1,5 @@
+using Hotel.Atr.BLL.Interfaces;
+using Hotel.Atr.BLL.Model;
 using Hotel.Atr.Models;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.Extensions.Options;
@@ -5,8 +7,16 @@ using System.Globalization;
 
 var builder = WebApplication.CreateBuilder(args);
 
+
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddTransient<IEventService, EventService>();
+builder.Services.AddSingleton<IRepository<Event>, Repository<Event>>();
+builder.Services.AddSingleton<IRepository<EventCategory>, Repository<EventCategory>>();
+
+
+
 
 builder.Services.Configure<RequestLocalizationOptions>(options =>
 {
@@ -24,6 +34,11 @@ builder.Services.Configure<RequestLocalizationOptions>(options =>
 
 builder.Services
     .AddLocalization(options => options.ResourcesPath = "Resources");
+
+//глобавльный фильтр - все сервисы MVC и контроллеры и RazarPage
+builder.Services.AddMvc(options => options
+.Filters.Add(new IEFilterAttribute()));
+
 
 builder.Services
     .AddControllersWithViews()

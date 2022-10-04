@@ -44,6 +44,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Interfaces\IEventService.cs" />
+    <Compile Include="Interfaces\IRepository.cs" />
     <Compile Include="Model\Availabilty.cs" />
     <Compile Include="Model\Event.cs" />
     <Compile Include="Model\EventCategory.cs" />
@@ -51,6 +53,7 @@
     <Compile Include="Model\Location.cs" />
     <Compile Include="Model\LocationService.cs" />
     <Compile Include="Model\Picture.cs" />
+    <Compile Include="Model\Repository.cs" />
     <Compile Include="Model\ReturnResult.cs" />
     <Compile Include="Model\Room.cs" />
     <Compile Include="Model\RoomProperties.cs" />

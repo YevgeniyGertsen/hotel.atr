@@ -5,54 +5,51 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Data.SqlClient;
 using Dapper;
+using Hotel.Atr.BLL.Interfaces;
+
 namespace Hotel.Atr.BLL.Model
 {
-    public class EventService
+    public class EventService : IEventService
     {
-        string connectionString = @"Server=223-17\MSSQLSERVER99;Database=ATR;Trusted_Connection=True;";
+        private readonly IRepository<Event> _repo;
+        private readonly IRepository<EventCategory> _repoCategory;
+
+        public EventService(IRepository<Event> repo, 
+            IRepository<EventCategory> repoCategory)
+        {
+            _repo = repo;
+            _repoCategory = repoCategory;
+        }
+
         public List<Event> GetEvents()
         {
             try
             {
-                using (SqlConnection db = new SqlConnection(connectionString))
-                {
-                    db.Open();
+                List<Event> data = _repo.Get();
 
-                    List<Event> data = db.Query<Event>
-                        ("SELECT * FROM Event ")
-                        .ToList();
+                foreach (Event item in data)
+                    item.EventCategory = _repoCategory
+                        .GetItemById(item.EventCategoryId); 
 
-
-                    foreach (Event item in data)
-                    {
-                        item.EventCategory = db.QueryFirstOrDefault<EventCategory>("SELECT * FROM EventCategory where EventCategoryId=@EventCategoryId",
-                            new { EventCategoryId = item.EventCategoryId });
-
-
-                    }
-
-                    return data;
-                }
+                return data;
             }
-            catch (Exception ex)
+            catch
             {
                 return null;
             }
         }
+
         public Event GetEvent(int eventId)
         {
             try
             {
-                using (SqlConnection db = new SqlConnection(connectionString))
-                {
-                    db.Open();
+                Event data = _repo.GetItemById(eventId);
 
-                    Event data = db.QueryFirstOrDefault<Event>
-                        ("SELECT * FROM Event WHERE EventId=@eventId", new { eventId });
-                    data.EventCategory = db.QueryFirstOrDefault<EventCategory>("SELECT * FROM EventCategory where EventCategoryId=@EventCategoryId",
-                        new { EventCategoryId = data.EventCategoryId });
-                    return data;
-                }
+                //data.EventCategory = db.QueryFirstOrDefault<EventCategory>("SELECT * FROM EventCategory where EventCategoryId=@EventCategoryId",
+                //    new { EventCategoryId = data.EventCategoryId });
+
+                return data;
+
             }
             catch (Exception ex)
             {
@@ -61,14 +58,14 @@ namespace Hotel.Atr.BLL.Model
         }
 
         /// <summary>
-        /// Метод возврощающий уникальный категории, для существующих событий
+        /// Метод возврощающий уникальный категории, 
+        /// для существующих событий
         /// </summary>
         /// <returns></returns>
         public Dictionary<string, string> UniqumCategories()
         {
             Dictionary<string, string> eventCategories =
-                GetEvents()
-                .Select(x => new
+                GetEvents().Select(x => new
                 {
                     Code = x.EventCategory.Code,
                     Name = x.EventCategory.Name

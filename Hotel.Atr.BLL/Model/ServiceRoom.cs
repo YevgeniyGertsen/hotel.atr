@@ -11,6 +11,7 @@ namespace Hotel.Atr.BLL.Model
     public class ServiceRoom
     {
         string connectionString = @"Server=223-17\MSSQLSERVER99;Database=ATR;Trusted_Connection=True;";
+
         public List<Room> GetRooms()
         {
             try
@@ -41,6 +42,7 @@ namespace Hotel.Atr.BLL.Model
                 return null;
             }
         }
+
         public Room GetRoom(Guid roomId)
         {
             try
@@ -66,7 +68,6 @@ namespace Hotel.Atr.BLL.Model
                 return null;
             }
         }
-
 
         public bool CheckAvailability(Guid roomId, DateTime startDate, DateTime endDate, out string status)
         {
