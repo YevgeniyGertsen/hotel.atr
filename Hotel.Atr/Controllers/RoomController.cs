@@ -1,4 +1,5 @@
-﻿using Hotel.Atr.BLL.Model;
+﻿using Hotel.Atr.BLL.Interfaces;
+using Hotel.Atr.BLL.Model;
 using Microsoft.AspNetCore.Hosting.Server;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -9,27 +10,33 @@ namespace Hotel.Atr.Controllers
 {
     public class RoomController : Controller
     {
-        private ServiceRoom serviceRooms = new ServiceRoom();
+        private readonly IServiceRoom _serviceRoom;
+        private readonly IAvailabilty _availabilty;
 
-        // GET: RoomController
+        public RoomController(IServiceRoom serviceRoom,
+             IAvailabilty availabilty)
+        {
+            _serviceRoom = serviceRoom;
+            _availabilty = availabilty;
+        }
+
+
         public ActionResult Index()
         {
             ViewBag.Description = "List Room";
             ViewBag.Title = "Room";
 
-            return View(serviceRooms.GetRooms());
+            return View(_serviceRoom.GetRooms());
         }
         
-
-
         public ActionResult RoomList()
         {
-            return View(serviceRooms.GetRooms());
+            return View(_serviceRoom.GetRooms());
         }
 
         public JsonResult RoomListjSON()
         {
-            var data = serviceRooms.GetRooms();
+            var data = _serviceRoom.GetRooms();
             return Json(data);
         }
 
@@ -46,14 +53,16 @@ namespace Hotel.Atr.Controllers
             return File(filename, contentType, newFileName);
         }
 
-        public ActionResult RoomDetails( string availabilityRoom="")
+        public ActionResult RoomDetails(Guid roomId)
         {
             var data = Response;
             var data2 = RouteData;
             var data3 = HttpContext;
 
-            Guid roomId = Guid.Parse(RouteData.Values["id"].ToString());
-            return View(serviceRooms.GetRoom(roomId));
+            if(roomId == null || roomId == Guid.Empty)
+                roomId = Guid.Parse(RouteData.Values["id"].ToString());
+
+            return View(_serviceRoom.GetRoom(roomId));
         }   
         
         [HttpPost]
@@ -61,30 +70,20 @@ namespace Hotel.Atr.Controllers
         {
             string availabilityRoom = "";
            
-            TempData["CheckAvailabilityResult"] = serviceRooms.CheckAvailability(roomId, arrive, departure, out availabilityRoom);
+            TempData["CheckAvailabilityResult"] = _serviceRoom.CheckAvailability(roomId, arrive, departure, out availabilityRoom);
             TempData["AvailabilityRoom"] = availabilityRoom;
 
-            return RedirectToAction("RoomDetails", new { roomId, availabilityRoom });
+            return RedirectToAction("RoomDetails", new { roomId});
         }
 
         public ActionResult BookingRoom(Guid roomId, DateTime arrive, DateTime departure)
         {
             Availabilty availabilty = new Availabilty(arrive, departure, roomId);
+            availabilty.RoomId = _serviceRoom.GetRoom(roomId).RoomId;
 
-            serviceRooms.BookingRoom(availabilty);
+            _serviceRoom.BookingRoom(availabilty);
 
-            return View();
+            return RedirectToAction("RoomDetails", new { roomId });
         }
-
-        //public string SomeMethod()
-        //{
-        //    return "<h1>Test</h1>";
-        //}
-
-        //[NonAction]
-        //public string SomeMethod2()
-        //{
-        //    return Content("<h1>Test</h1>").ToString();
-        //}
     }
 }

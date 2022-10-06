@@ -1,4 +1,5 @@
 ﻿using Dapper;
+using Hotel.Atr.BLL.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
@@ -8,65 +9,67 @@ using System.Threading.Tasks;
 
 namespace Hotel.Atr.BLL.Model
 {
-    public class ServiceRoom
+    public class ServiceRoom : IServiceRoom
     {
-        string connectionString = @"Server=223-17\MSSQLSERVER99;Database=ATR;Trusted_Connection=True;";
+        private readonly IRepository<Room> _repo;
+        private readonly IRepository<Picture> _repoPic;
+        private readonly IRepository<RoomProperties> _repoProp;
+        private readonly IRepository<Availabilty> _repoAvl;
+
+        public ServiceRoom(IRepository<Room> repo,
+            IRepository<Picture> repoPic,
+            IRepository<RoomProperties> repoProp,
+            IRepository<Availabilty> repoAvl)
+        {
+            _repo = repo;
+            _repoPic = repoPic;
+            _repoProp = repoProp;
+            _repoAvl = repoAvl;
+        }
+
 
         public List<Room> GetRooms()
         {
+            List<Room> data = new List<Room>();
             try
             {
-                using (SqlConnection db = new SqlConnection(connectionString))
+                data = _repo.Get();
+
+                foreach (Room room in data)
                 {
-                    db.Open();
+                    room.Pictures = _repoPic.Get()
+                                    .Where(w => w.RoomId == room.RoomId)
+                                    .ToList();
 
-                    List<Room> data = db.Query<Room>
-                        ("SELECT * FROM Room ")
-                        .ToList();
-
-
-                    foreach (Room room in data)
-                    {
-                        room.Pictures = db.Query<Picture>("SELECT * FROM Picture where RoomId=@RoomId",
-                            new { RoomId = room.RoomId }).ToList();
-
-                        room.RoomProperties = db.Query<RoomProperties>("SELECT * FROM RoomProperties where RoomId=@RoomId",
-                            new { RoomId = room.RoomId }).ToList();
-                    }
-
-                    return data;
+                    room.RoomProperties = _repoProp.Get()
+                                    .Where(w => w.RoomId == room.RoomId)
+                                    .ToList();
                 }
             }
             catch (Exception ex)
             {
-                return null;
+
             }
+
+            return data;
         }
 
         public Room GetRoom(Guid roomId)
         {
+            Room room = null;
             try
             {
-                using (SqlConnection db = new SqlConnection(connectionString))
-                {
-                    db.Open();
-
-                    Room room = db.QueryFirstOrDefault<Room>
-                        ("SELECT * FROM Room where RoomGuid = @RoomGuid",
-                        new { RoomGuid = roomId });
-
-
-                    room.RoomProperties =
-                        db.Query<RoomProperties>("SELECT * FROM RoomProperties where RoomId=@RoomId",
-                        new { RoomId = room.RoomId }).ToList();
-
-                    return room;
-                }
+                room = _repo.GetItemById(roomId);
+                room.RoomProperties = _repoProp
+                    .Get()
+                    .Where(w => w.RoomId == room.RoomId).ToList();
             }
             catch
             {
-                return null;
+
             }
+
+            return room;
         }
 
         public bool CheckAvailability(Guid roomId, DateTime startDate, DateTime endDate, out string status)
@@ -74,35 +77,30 @@ namespace Hotel.Atr.BLL.Model
             bool result = false;
             try
             {
-                using (SqlConnection db = new SqlConnection(connectionString))
+                var room = _repo.GetItemById(roomId);
+
+                //получаем список броней
+                var availabilties =
+                   _repoAvl.Get()
+                   .Where(w => w.RoomId == room.RoomId
+                   && DateTime.Now > w.ReservationStart);
+
+                //проверим доступна ли комната на выбранный период
+                if (availabilties.Any(a => startDate > a.ReservationStart
+                                      && startDate < a.ReservationEnd))
                 {
-                    db.Open();
-
-                    var room = db.QueryFirstOrDefault<Room>("SELECT * FROM Room where RoomGuid = @RoomGuid",
-                        new { RoomGuid = roomId });
-
-                    //получаем список броней
-                    var availabilties =
-                        db.Query<Availabilty>("SELECT * FROM Availabilty where RoomId = @RoomId",
-                        new { RoomId = room.RoomId }).Where(w => DateTime.Now > w.ReservationStart);
-
-                    //проверим доступна ли комната на выбранный период
-                    if (availabilties.Any(a => startDate > a.ReservationStart
-                                          && startDate < a.ReservationEnd))
-                    {
-                        status = "Номер на выбранные период не доступен";
-                        result = false;
-                    }
-                    else
-                    {
-                        status = "Номер на выбранные период доступен";
-                        result = true;
-                    }
+                    status = "Номер на выбранные период не доступен";
+                    result = false;
+                }
+                else
+                {
+                    status = "Номер на выбранные период доступен";
+                    result = true;
                 }
             }
             catch (Exception ex)
             {
-                status = "При проверки доступности возникла ошибка ("+ex.Message+")";
+                status = "При проверки доступности возникла ошибка (" + ex.Message + ")";
                 result = false;
             }
 
@@ -115,14 +113,11 @@ namespace Hotel.Atr.BLL.Model
 
             try
             {
-                using (SqlConnection db = new SqlConnection(connectionString))
-                {
-                    db.Open();
+                _repoAvl.Create(availabilty, 
+                    "ReservationStart", 
+                    "ReservationEnd", 
+                    "RoomId");
 
-                    db.Query("INSERT INTO [dbo].[Availabilty]" +
-                        " ([ReservationStart],[ReservationEnd],[RoomId])" +
-                        "VALUES (@ReservationStart,@ReservationEnd,@RoomId)", availabilty);                    
-                }
                 result.Result = true;
                 result.Message = "OK";
             }
@@ -130,8 +125,8 @@ namespace Hotel.Atr.BLL.Model
             {
                 result.Result = false;
                 result.Message = ex.Message;
-                
             }
+
             return result;
         }
     }

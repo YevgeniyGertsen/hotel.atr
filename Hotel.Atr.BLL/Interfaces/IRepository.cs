@@ -12,12 +12,14 @@ namespace Hotel.Atr.BLL.Interfaces
              
         List<T> Get();
 
-        void Create(T obj);
+        void Create(T obj, params string[] prop);
 
         void Update(T obj);
 
         void Delete(T obj);
 
         T GetItemById(int id);
+
+        T GetItemById(Guid id);
     }
 }

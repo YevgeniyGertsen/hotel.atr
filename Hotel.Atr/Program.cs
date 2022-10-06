@@ -11,9 +11,19 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
+builder.Services.AddTransient<IAvailabilty, Availabilty>();
 builder.Services.AddTransient<IEventService, EventService>();
+builder.Services.AddTransient<IServiceRoom, ServiceRoom>();
+
+
 builder.Services.AddSingleton<IRepository<Event>, Repository<Event>>();
 builder.Services.AddSingleton<IRepository<EventCategory>, Repository<EventCategory>>();
+builder.Services.AddSingleton<IRepository<Room>, Repository<Room>>();
+builder.Services.AddSingleton<IRepository<RoomProperties>, Repository<RoomProperties>>();
+builder.Services.AddSingleton<IRepository<Picture>, Repository<Picture>>();
+builder.Services.AddSingleton<IRepository<Availabilty>, Repository<Availabilty>>();
+
+
 
 
 

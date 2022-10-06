@@ -19,9 +19,18 @@ namespace Hotel.Atr.BLL.Model
             }
         }
 
-        public void Create(T obj)
+        public void Create(T obj, params string[] prop)
         {
-            throw new NotImplementedException();
+            using (SqlConnection db = new SqlConnection(connectionString))
+            {
+                db.Open();
+
+                string query = "INSERT INTO " + typeof(T).Name + 
+                    " ("+ string.Join(",", prop) + ") " +
+                    " VALUES (@"+ string.Join(",@", prop)+ ")";
+
+                db.Query(query,obj);
+            }
         }
 
         public void Delete(T obj)
@@ -50,6 +59,21 @@ namespace Hotel.Atr.BLL.Model
                 string query = "SELECT * FROM " + typeof(T).Name +
                     " WHERE " + typeof(T).Name + "Id = @Id";
 
+
+                T data = db.QueryFirstOrDefault<T>(query, new { Id = id });
+
+                return data;
+            }
+        }
+
+        public T GetItemById(Guid id)
+        {
+            using (SqlConnection db = new SqlConnection(connectionString))
+            {
+                db.Open();
+
+                string query = "SELECT * FROM " + typeof(T).Name +
+                    " WHERE " + typeof(T).Name + "Guid = @id";
 
                 T data = db.QueryFirstOrDefault<T>(query, new { Id = id });
 

@@ -36,8 +36,8 @@ namespace Hotel.Atr.BLL.Model
 
 
         public List<Availabilty> Availabilties;
-        public ICollection<Picture> Pictures { get; set; }
-        public ICollection<RoomProperties> RoomProperties { get; set; }
+        public List<Picture> Pictures { get; set; }
+        public List<RoomProperties> RoomProperties { get; set; }
 
         public Picture GetMainPicture
         {
