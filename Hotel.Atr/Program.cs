@@ -1,7 +1,11 @@
-using Hotel.Atr.BLL.Interfaces;
-using Hotel.Atr.BLL.Model;
 using Hotel.Atr.Models;
+using Hotel.ATR.EF.BLL;
+using Hotel.ATR.EF.BLL.Data;
+using Hotel.ATR.EF.BLL.Interfaces;
+using Hotel.ATR.EF.BLL.Model;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Localization;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using System.Globalization;
 
@@ -11,22 +15,25 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
-builder.Services.AddTransient<IAvailabilty, Availabilty>();
+builder.Services.AddTransient<Availabilty>();
 builder.Services.AddTransient<IEventService, EventService>();
 builder.Services.AddTransient<IServiceRoom, ServiceRoom>();
 
+builder.Services
+    .AddDbContext<HotelAtrDbContext>(options =>
+    options.UseSqlServer(builder
+    .Configuration
+    .GetConnectionString("DefaultConnection")));
 
-builder.Services.AddSingleton<IRepository<Event>, Repository<Event>>();
-builder.Services.AddSingleton<IRepository<EventCategory>, Repository<EventCategory>>();
-builder.Services.AddSingleton<IRepository<Room>, Repository<Room>>();
-builder.Services.AddSingleton<IRepository<RoomProperties>, Repository<RoomProperties>>();
-builder.Services.AddSingleton<IRepository<Picture>, Repository<Picture>>();
-builder.Services.AddSingleton<IRepository<Availabilty>, Repository<Availabilty>>();
+builder.Services
+    .AddDbContext<AppIdentityDbcContext>(options =>
+    options.UseSqlServer(builder
+    .Configuration
+    .GetConnectionString("DefaultConnection")));
 
-
-
-
-
+builder.Services.AddIdentity<AppUser, IdentityRole>()
+    .AddEntityFrameworkStores<AppIdentityDbcContext>()
+    .AddDefaultTokenProviders();
 
 builder.Services.Configure<RequestLocalizationOptions>(options =>
 {
@@ -66,8 +73,9 @@ if (!app.Environment.IsDevelopment())
 app.UseStaticFiles();
 
 
-
+app.UseAuthentication();
 app.UseAuthorization();
+
 
 
 //app.MapControllerRoute("ignoreRoute",
@@ -128,7 +136,7 @@ var localizationOptions = app.Services
     .GetService<IOptions<RequestLocalizationOptions>>().Value;
 
 app.UseRequestLocalization(localizationOptions);
-     
+
 
 //app.Use(async (context, next) =>
 //{

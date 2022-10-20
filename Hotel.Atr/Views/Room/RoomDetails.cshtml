@@ -1,4 +1,4 @@
-﻿@using Hotel.Atr.BLL.Model
+﻿@using Hotel.ATR.EF.BLL.Model
 @model Room
 @{
    
@@ -102,7 +102,7 @@
                 <div class="room-facilities">
                     <h3 class="room-details-title">room facilities</h3>
                     <div class="single-facility">
-                        @foreach (RoomProperties item in Model.RoomProperties)
+                        @foreach (RoomProperty item in Model.RoomProperties)
                         {
                             <span><i class="zmdi zmdi-check"></i>@item.ValuePropery</span>
                         }

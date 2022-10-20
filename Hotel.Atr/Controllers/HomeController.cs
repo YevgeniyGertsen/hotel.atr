@@ -1,4 +1,5 @@
 ﻿using Hotel.Atr.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
 using System.Diagnostics;
@@ -11,13 +12,38 @@ namespace Hotel.Atr.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly IStringLocalizer<HomeController> _localizer;
+        private readonly UserManager<AppUser> _userManager;
 
         public HomeController(ILogger<HomeController> logger,
-            IStringLocalizer<HomeController> localizer)
+            IStringLocalizer<HomeController> localizer,
+            UserManager<AppUser> userManager)
         {
             _logger = logger;
             _localizer = localizer;
+            _userManager = userManager;
         }
+
+        public ActionResult Register()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Register(User user)
+        {
+            AppUser appUser = new AppUser
+            {
+                UserName = user.Name,
+                Email = user.Email
+            };
+            var result = await _userManager.CreateAsync(appUser, user.Password);
+            if (result.Succeeded)
+                return RedirectToAction("Index");
+            else
+                return RedirectToAction("Error");
+        }
+
+
 
         // [IEFilter]
         [TypeFilter(typeof(CatchError), Order = 1)]

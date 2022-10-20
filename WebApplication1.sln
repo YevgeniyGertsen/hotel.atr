@@ -13,7 +13,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApplication4", "WebAppli
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApplication5", "WebApplication5\WebApplication5.csproj", "{A84E0686-9BD6-4C43-9D47-01879C486E10}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hotel.Atr.Admin", "Hotel.Atr.Admin\Hotel.Atr.Admin.csproj", "{35E903E4-4390-4D4F-924E-D211E1F38FF3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hotel.Atr.Admin", "Hotel.Atr.Admin\Hotel.Atr.Admin.csproj", "{35E903E4-4390-4D4F-924E-D211E1F38FF3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hotel.ATR.EF.BLL", "Hotel.ATR.EF.BLL\Hotel.ATR.EF.BLL.csproj", "{8DAF6ECD-65EB-4285-BC7E-AFCA94F9A0F2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +47,10 @@ Global
 		{35E903E4-4390-4D4F-924E-D211E1F38FF3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{35E903E4-4390-4D4F-924E-D211E1F38FF3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{35E903E4-4390-4D4F-924E-D211E1F38FF3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8DAF6ECD-65EB-4285-BC7E-AFCA94F9A0F2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8DAF6ECD-65EB-4285-BC7E-AFCA94F9A0F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8DAF6ECD-65EB-4285-BC7E-AFCA94F9A0F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8DAF6ECD-65EB-4285-BC7E-AFCA94F9A0F2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,11 +1,5 @@
-﻿@using Microsoft.AspNetCore.Mvc.Localization
-@inject IViewLocalizer localizer
+﻿@model User
 
-@using Hotel.ATR.EF.BLL.Model
-@model List<Event>
-@{
-    Dictionary<string, string> categories = ViewBag.Categories;
-}
 <!-- Breadcrumb Area Start-->
 <section class="breadcrumb-area overlay-dark-2 bg-3">
     <div class="container">
@@ -32,40 +26,15 @@
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
                 <div class="section-title text-center">
-                    <h3>@localizer["text_1"].Value</h3>
+                  
                     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellente sque vel volutpat felis, eu condimentum massa. Pellentesque mollis eros vel mattis tempor. Aliquam </p>
                 </div>
             </div>
         </div>
     </div>
     <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="event-menu">
-                    <button data-filter="*" class="active"> All</button>
-                    @foreach (var item in categories)
-                    {
-                        <button data-filter=".@item.Key">@item.Value</button>
-                    }
-                </div>
-            </div>
-        </div>
 
-        <div class="row event-items">
-            @foreach (Event item in Model)
-            {
-                <div class="single-event @item.EventStyle col-xs-12 @item.EventCategory.Code">
-                    <div class="single-event-item">
-                        <img src="@item.ImagePath" alt="">
-                        <div class="event-text">
-                            <h3 class="event-title">@item.Name</h3>
-                            <h3 class="author-name">By : @item.Author</h3>
-                            <p>@item.ShortDescription</p>
-                        </div>
-                    </div>
-                </div>
-            }
-        </div>
+
     </div>
 </section>
 <!-- Event Area End -->
@@ -75,6 +44,40 @@
         <div class="client-area">
             <div class="container">
                 <div class="row">
+                    <form asp-action="Register" method="post">
+<div class="form-control">
+    <div class="form-group">
+        <label asp-for="Name"></label>
+    <input type="text"  class="form-control" asp-for="Name" />
+    </div>
+    <hr />
+    <div class="form-group">
+          <label asp-for="Email"></label>
+    <input type="text" class="form-control" asp-for="Email" />
+    </div>
+      <hr />
+    <div class="form-group">
+          <label asp-for="Password"></label>
+    <input type="text" class="form-control" asp-for="Password" />
+    </div>
+      <hr />
+    <button type="submit">Register</button>
+    
+</div>
+</form>
+
+
+<br style="clear: both" />
+
+<br style="clear: both" />
+<br style="clear: both" />
+<br style="clear: both" />
+<br style="clear: both" />
+<br style="clear: both" />
+<br style="clear: both" />
+
+
+
                     <div class="client-carousel">
                         <div class="single-client">
                             <div class="client-image">
@@ -121,3 +124,4 @@
             </div>
         </div>
         <!-- Client Area End -->
+

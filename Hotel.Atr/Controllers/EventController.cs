@@ -1,5 +1,5 @@
-﻿using Hotel.Atr.BLL.Interfaces;
-using Hotel.Atr.BLL.Model;
+﻿using Hotel.ATR.EF.BLL.Interfaces;
+using Hotel.ATR.EF.BLL.Model;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Hotel.Atr.Controllers

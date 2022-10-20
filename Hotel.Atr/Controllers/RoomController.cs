@@ -1,5 +1,5 @@
-﻿using Hotel.Atr.BLL.Interfaces;
-using Hotel.Atr.BLL.Model;
+﻿using Hotel.ATR.EF.BLL.Interfaces;
+using Hotel.ATR.EF.BLL.Model;
 using Microsoft.AspNetCore.Hosting.Server;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -11,10 +11,10 @@ namespace Hotel.Atr.Controllers
     public class RoomController : Controller
     {
         private readonly IServiceRoom _serviceRoom;
-        private readonly IAvailabilty _availabilty;
+        private readonly Availabilty _availabilty;
 
         public RoomController(IServiceRoom serviceRoom,
-             IAvailabilty availabilty)
+             Availabilty availabilty)
         {
             _serviceRoom = serviceRoom;
             _availabilty = availabilty;

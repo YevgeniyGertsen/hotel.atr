@@ -1,4 +1,4 @@
-﻿@using Hotel.Atr.BLL.Model
+﻿@using Hotel.ATR.EF.BLL.Model
 @model List<Room>
 
 <!-- Breadcrumb Area Start-->
@@ -60,7 +60,7 @@
                                         <div class="room-service">
                                             <p>
 
-                                                @foreach (RoomProperties roomPropertie in room.RoomProperties)
+                                                @foreach (RoomProperty roomPropertie in room.RoomProperties)
                                                 {
                                                     <span>
                                                         @roomPropertie.NamePropery

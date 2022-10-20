@@ -1,22 +1,28 @@
-﻿using Hotel.Atr.BLL.Model;
-using Microsoft.AspNetCore.Http;
+﻿using Hotel.ATR.EF.BLL;
+using Hotel.ATR.EF.BLL.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Hotel.Atr.Controllers
 {
     public class LocationController : Controller
     {
+        private readonly ILocationService _service;
+
+        public LocationController(ILocationService service)
+        {
+            _service = service;
+        }
+
+
         // GET: LocationController
         public ActionResult Index()
         {
-            LocationService locationService = new LocationService();
-            return View(locationService.GetLocations());
+            return View(_service.GetLocations());
         }
         public ActionResult LocationDetails(int id)
         {
-            LocationService locationService = new LocationService();
-            locationService.UpdateViewsLocation(id);
-            return View(locationService.GetLocation(id));
+            _service.UpdateViewsLocation(id);
+            return View(_service.GetLocation(id));
         }
         [HttpPost]
         public ActionResult SaveUserRequest()
@@ -24,8 +30,6 @@ namespace Hotel.Atr.Controllers
             var fullName = Request.Form["fullName"];
             var fonName = Request.Form["fonName"];
             return RedirectToAction("Index");
-        }
-
-       
+        }       
     }
 }
